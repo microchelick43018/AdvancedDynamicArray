@@ -60,7 +60,7 @@ namespace AdvancedDynamicArray
                 }
                 else if (command == "exit")
                 {
-                    continue;
+                    return;
                 }
                 else
                 {
