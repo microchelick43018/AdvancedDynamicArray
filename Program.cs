@@ -20,28 +20,9 @@ namespace AdvancedDynamicArray
         static void ShowMenu()
         {
             Console.WriteLine("Доступные команды: ");
+            Console.WriteLine("Введите число, чтобы добавить его в список");
             Console.WriteLine("sum - посчитать сумму введенных чисел и вывести её на экран;");
             Console.WriteLine("exit - выйти из программы.\n");
-        }
-
-        static string ReadCommand()
-        {
-            string command = "";
-            bool isCorrect = false;
-            Console.Write("Введите команду: ");
-            while (isCorrect == false)
-            {
-                command = Console.ReadLine();
-                if (command == "sum" || command == "exit")
-                {
-                    isCorrect = true;
-                }
-                else
-                {
-                    Console.Write("Неверная команда! повторите ввод: ");
-                }
-            }
-            return command;
         }
 
         static int CountSum(List<int> values)
@@ -57,26 +38,37 @@ namespace AdvancedDynamicArray
         static void Main(string[] args)
         {
             var values = new List<int>();
-            int quantityOfValues = 0;
             int newValue = 0, sum = 0;
+            bool inputIsNumber;
             string command = "";
-            Console.Write("Введите количество чисел: ");
-            quantityOfValues = ReadInt();
-            for (int i = 0; i < quantityOfValues; i++)
-            {
-                Console.Write($"Введите {i + 1}-ое число: ");
-                newValue = ReadInt();
-                values.Add(newValue);
-            }
             while (command != "exit")
             {
+                inputIsNumber = false;
                 ShowMenu();
-                command = ReadCommand();
-                if (command == "sum")
+                Console.Write("Введите команду: ");
+                command = Console.ReadLine();
+                inputIsNumber = int.TryParse(command, out newValue);
+                if (inputIsNumber == true)
+                {
+                    values.Add(newValue);
+                    Console.WriteLine("Число добавлено в список");
+                }
+                else if (command == "sum")
                 {
                     sum = CountSum(values);
                     Console.WriteLine($"Сумма введенных чисел = {sum}");
                 }
+                else if (command == "exit")
+                {
+                    continue;
+                }
+                else
+                {
+                    Console.WriteLine("Неверная команда!");
+                }
+                Console.WriteLine("Нажмите на любую клавишу, чтобы продолжить");
+                Console.ReadKey();
+                Console.Clear();
             }
         }
     }
